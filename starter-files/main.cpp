@@ -6,5 +6,6 @@ using namespace std;
 
 
 int main() {
-    draw_board();
+    Board b;
+    b.draw_board();
 }

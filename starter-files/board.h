@@ -1,24 +1,25 @@
 #include <iostream>
 
-
 using namespace std;
 
+class Board {
+public:
+    // Spaces out board for readibility
+    void space_out();
 
-// Spaces out for appearance
-void space_out();
+    // Draws segment of the board that is mostly space
+    void draw_spaced_segment();
 
-// Draws part of spaced line
-void draw_spaced_segment();
+    // Draws line of the board that is mostly space
+    void draw_spaced_line();
 
-// Only draws dots on two vertical dividors
-void draw_spaced_line();
+    // Draws a portion of the board that is connected
+    void draw_connected_line();
 
+    // Draws a third of the board
+    void draw_third();
 
-// Draws dots for horizontal and vertical dividors
-void draw_connected_line();
+    // Draws the board
+    void draw_board();
+};
 
-// Draws third of the board
-void draw_third();
-
-// Draws the game board
-void draw_board();
