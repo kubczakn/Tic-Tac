@@ -2,10 +2,9 @@
 #include "player.h"
 #include "board.h"
 
-using namespace std;
-
 
 int main() {
     Board b;
     b.draw_board();
+    b.move(1, 1, 'x');
 }
