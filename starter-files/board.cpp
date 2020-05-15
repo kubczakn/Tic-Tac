@@ -161,6 +161,8 @@ void Board::position_column(int column) {
     }
 }
 
+// Rework because moves on left side of row are removes when moves on right side are made
+
 void Board::draw_x(int row) {
     if (row == 2) {
         int num = 0;
@@ -241,9 +243,58 @@ void Board::move(int row, int column, char piece) {
     Board::position_column(column);
     if (piece == 'x') {
         Board::draw_x(row);
+        x_moves[row][column] = 'x';
+        if (win() == true) {
+            draw_line();
+        }
     }
     else if (piece == 'o') {
         Board::draw_o(row);
+        o_moves[row][column] = 'o';
     }
     setCursorPosition(0, 20);
+}
+
+bool Board::win() {
+    int num = 0;
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            if (x_moves[i][j] == 'x') {
+                ++num;
+            }
+            if (num == 3) {
+                return true;
+            }
+        }
+        num = 0;
+    }
+    num = 0;
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            if (x_moves[j][i] == 'x') {
+                ++num;
+            }
+            if (num == 3) {
+                return true;
+            }
+        }
+        num = 0;
+    }
+    
+    return false;
+    // Implement way to check diagonals and check for o moves
+
+}
+
+void Board::draw_line() {
+    setCursorPosition(0, 0);
+    std::cout << std::endl << std::endl
+        << std::endl;
+    space_out();
+    for (int i = 0; i < 17; ++i) {
+        std::cout << " * ";
+    }
+    setCursorPosition(0, 20);
+
+    // Implement lines for other possible wins
 }

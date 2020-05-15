@@ -43,5 +43,16 @@ public:
 
     // Completes player move
     void move(int row, int column, char piece);
+
+    // Draws winning line
+    void draw_line();
+
+    // Returns true if last move creates results in a win
+    bool win();
+
+private:
+    // Tracks moves
+    int x_moves[3][3];
+    int o_moves[3][3];
 };
 
