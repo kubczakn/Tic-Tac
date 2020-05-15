@@ -7,4 +7,5 @@ int main() {
     Board b;
     b.draw_board();
     b.move(1, 1, 'x');
+    b.move(2, 0, 'o');
 }

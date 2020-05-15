@@ -33,7 +33,7 @@ public:
     void draw_x(int row);
     
     // Draws an O
-    void draw_o();
+    void draw_o(int row);
 
     // Positions piece in correct row
     void position_row(int row);

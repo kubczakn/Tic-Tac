@@ -69,8 +69,78 @@ void Board::column_down() {
     }
 }
 
-void Board::draw_o() {
-
+void Board::draw_o(int row) {
+    if (row == 2) {
+        int num = 0;
+        Board::position_row(row);
+        while (num < 24) {
+            std::cout << "\b";
+            ++num;
+        }
+        std::cout << "*                 *     ";
+        std::cout << " * * " << std::endl;
+        Board::position_row(row);
+        num = 0;
+        while (num < 24) {
+            std::cout << "\b";
+            ++num;
+        }
+        std::cout << "*                 *     ";
+        std::cout << "*   *" << std::endl;
+        Board::position_row(row);
+        num = 0;
+        while (num < 24) {
+            std::cout << "\b";
+            ++num;
+        }
+        std::cout << "*                 *     ";
+        std::cout << "*   *" << std::endl;
+        Board::position_row(row);
+        num = 0;
+        while (num < 24) {
+            std::cout << "\b";
+            ++num;
+        }
+        std::cout << "*                 *     ";
+        std::cout << "*   *" << std::endl;
+        Board::position_row(row);
+        num = 0;
+        while (num < 24) {
+            std::cout << "\b";
+            ++num;
+        }
+        std::cout << "*                 *     ";
+        std::cout << " * * ";
+    }
+    else if (row == 1) {
+        Board::position_row(row);
+        std::cout << "\b\b\b\b\b\b*     ";
+        std::cout << " * * " << std::endl;
+        Board::position_row(row);
+        std::cout << "\b\b\b\b\b\b*     ";
+        std::cout << "*   *" << std::endl;
+        Board::position_row(row);
+        std::cout << "\b\b\b\b\b\b*     ";
+        std::cout << "*   *" << std::endl;
+        Board::position_row(row);
+        std::cout << "\b\b\b\b\b\b*     ";
+        std::cout << "*   *" << std::endl;
+        Board::position_row(row);
+        std::cout << "\b\b\b\b\b\b*     ";
+        std::cout << " * * ";
+    }
+    else {
+        Board::position_row(row);
+        std::cout << " * * " << std::endl;
+        Board::position_row(row);
+        std::cout << "*   *" << std::endl;
+        Board::position_row(row);
+        std::cout << "*   *" << std::endl;
+        Board::position_row(row);
+        std::cout << "*   *" << std::endl;
+        Board::position_row(row);
+        std::cout << " * * ";
+    }
 }
 
 void Board::position_row(int row) {
@@ -171,6 +241,9 @@ void Board::move(int row, int column, char piece) {
     Board::position_column(column);
     if (piece == 'x') {
         Board::draw_x(row);
+    }
+    else if (piece == 'o') {
+        Board::draw_o(row);
     }
     setCursorPosition(0, 20);
 }
