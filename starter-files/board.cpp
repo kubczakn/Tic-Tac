@@ -15,11 +15,11 @@ public:
 
     void welcome() {
         char input;
-        cout << "Welcome to Tic-Tac-Toe!" << endl;
-        cout << "Player 1, please choose X or O: ";
+        cout << " Welcome to Tic-Tac-Toe!" << endl;
+        cout << " Player 1, please choose X or O: ";
         cin >> input;
         while (toupper(input) != 'X' && toupper(input) != 'O') {
-            cout << endl << "Invalid input, please try again: ";
+            cout << endl << " Invalid input, please try again: ";
             cin >> input;
         }
         player_one_piece = toupper(input);
@@ -47,10 +47,10 @@ public:
     bool move() {
         cout << endl;
         int num;
-        cout << "Player 1, please choose a number: ";
+        cout << " Player 1, please choose a number: ";
         cin >> num;
         while (squares[num] == 'X' || squares[num] == 'O') {
-            cout << endl << "Already selected, choose another number: ";
+            cout << endl << " Already selected, choose another number: ";
             cin >> num;
         }
         squares[num] = toupper(player_one_piece);
@@ -61,24 +61,24 @@ public:
         }
         if (check_win(player_one_piece) == true) {
             cout << endl;
-            cout << "Player 1 has won!" << endl;
+            cout << " Player 1 has won!" << endl;
             return true;
         }
-        cout << endl << "Player 2, please choose a number: ";
+        cout << endl << " Player 2, please choose a number: ";
         cin >> num;
         while (squares[num] == 'X' || squares[num] == 'O') {
-            cout << endl << "Already selected, choose another number: ";
+            cout << endl << " Already selected, choose another number: ";
             cin >> num;
         }
         squares[num] = toupper(player_two_piece);
         draw_board();
         if (check_draw() == true) {
-            cout << endl << "Draw! What a shame" << endl;
+            cout << endl << " Draw! What a shame" << endl;
             return true;
         }
         if (check_win(player_two_piece) == true) {
             cout << endl;
-            cout << "Player 2 has won!" << endl;
+            cout << " Player 2 has won!" << endl;
             return true;
         }
         return false;
