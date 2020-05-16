@@ -1,4 +1,8 @@
 #include <iostream>
+#include <set>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 using namespace std;
 
@@ -13,8 +17,9 @@ public:
         cout << "  " << squares[7] << " | " << squares[8] << " | " << squares[9] << endl;
     }
 
-    void welcome() {
+    int welcome() {
         char input;
+        int other_input;
         cout << " Welcome to Tic-Tac-Toe!" << endl;
         cout << " Player 1, please choose X or O: ";
         cin >> input;
@@ -29,6 +34,13 @@ public:
         else {
             player_two_piece = 'X';
         }
+        cout << endl << " Play against a human or computer? Input 1 for a human and 2 for a computer: ";
+        cin >> other_input;
+        while (other_input != 1 && other_input != 2) {
+            cout << endl << "Invalid input, please try again: ";
+            cin >> other_input;
+        }
+        return other_input;
     }
 
     bool check_draw() {
@@ -44,7 +56,8 @@ public:
         return false;
     }
 
-    bool move() {
+    virtual bool move() {
+        draw_board();
         cout << endl;
         int num;
         cout << " Player 1, please choose a number: ";
@@ -56,7 +69,7 @@ public:
         squares[num] = toupper(player_one_piece);
         draw_board();
         if (check_draw() == true) {
-            cout << endl << "Draw! What a shame" << endl;
+            cout << endl << " Draw! What a shame" << endl;
             return true;
         }
         if (check_win(player_one_piece) == true) {
@@ -117,9 +130,93 @@ public:
         }
         return false;
     }
+    
+    void board_reset() {
+        squares[1] = '1';
+        squares[2] = '2';
+        squares[3] = '3';
+        squares[4] = '4';
+        squares[5] = '5';
+        squares[6] = '6';
+        squares[7] = '7';
+        squares[8] = '8';
+        squares[9] = '9';
+    }
 
 private:
+    friend class Player;
     char squares[10] = { 'o', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
     char player_one_piece;
     char player_two_piece;
+};
+
+class Player : public Board {
+public:
+    Player(Board b_input) :
+        b(b_input), num_human_moves(0) {}
+
+    bool move() {
+        int num;
+        b.draw_board();
+        cout << endl;
+        cout << " Player 1, please choose a number: ";
+        cin >> num;
+        while (b.squares[num] == 'X' || b.squares[num] == 'O') {
+            cout << endl << " Already selected, choose another number: ";
+            cin >> num;
+        }
+        b.squares[num] = toupper(b.player_one_piece);
+        b.draw_board();
+        if (check_draw() == true) {
+            cout << endl << "Draw! What a shame" << endl;
+            return true;
+        }
+        if (check_win(player_one_piece) == true) {
+            cout << endl;
+            cout << " Player 1 has won!" << endl;
+            return true;
+        }
+        b.squares[comp_decision()] = toupper(b.player_two_piece);
+        b.draw_board();
+        if (check_draw() == true) {
+            cout << endl << " Draw! What a shame" << endl;
+            return true;
+        }
+        if (check_win(b.player_two_piece) == true) {
+            cout << endl;
+            cout << " Player 2 has won!" << endl;
+            return true;
+        }
+        return false;
+    }
+
+    int comp_decision() {
+        int move;
+        // Looks through what's currently on the board
+        for (int i = 1; i < 10; ++i) {
+            if (b.squares[i] == b.player_one_piece) {
+                human_player_moves.insert(i);
+            }
+        }
+        num_human_moves = human_player_moves.size();
+        if (num_human_moves == 1) {
+            sit = human_player_moves.begin();
+            srand(time(NULL));
+            move = 1 + (rand() % 9);
+            while (move == *sit) {
+                move = 1 + (rand() & 9);
+            }
+            return move;
+        }
+        // Add more functionality below
+        else {
+            return 0;
+        }
+    }
+
+private:
+    Board b;
+    set<int> human_player_moves;
+    set<int>::iterator sit;
+    int num_human_moves;
 };
