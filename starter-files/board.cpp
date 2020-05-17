@@ -167,7 +167,7 @@ public:
         b.squares[num] = toupper(b.player_one_piece);
         b.draw_board();
         if (b.check_draw() == true) {
-            cout << endl << "Draw! What a shame" << endl;
+            cout << endl << " Draw! What a shame" << endl;
             return true;
         }
         if (b.check_win(b.player_one_piece) == true) {
