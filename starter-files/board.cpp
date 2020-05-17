@@ -157,7 +157,6 @@ public:
 
     bool move() {
         int num;
-        b.draw_board();
         cout << endl;
         cout << " Player 1, please choose a number: ";
         cin >> num;
@@ -167,22 +166,22 @@ public:
         }
         b.squares[num] = toupper(b.player_one_piece);
         b.draw_board();
-        if (check_draw() == true) {
+        if (b.check_draw() == true) {
             cout << endl << "Draw! What a shame" << endl;
             return true;
         }
-        if (check_win(player_one_piece) == true) {
+        if (b.check_win(b.player_one_piece) == true) {
             cout << endl;
             cout << " Player 1 has won!" << endl;
             return true;
         }
         b.squares[comp_decision()] = toupper(b.player_two_piece);
         b.draw_board();
-        if (check_draw() == true) {
+        if (b.check_draw() == true) {
             cout << endl << " Draw! What a shame" << endl;
             return true;
         }
-        if (check_win(b.player_two_piece) == true) {
+        if (b.check_win(b.player_two_piece) == true) {
             cout << endl;
             cout << " Player 2 has won!" << endl;
             return true;
@@ -210,8 +209,61 @@ public:
         }
         // Add more functionality below
         else {
-            return 0;
+            return scan_moves();
         }
+    }
+    
+    int scan_moves() {
+        // Make a copy of squares array
+        Board b_copy;
+        b_copy.player_one_piece = b.player_one_piece;
+        b_copy.player_two_piece = b.player_two_piece;
+        for (int i = 1; i < 10; ++i) {
+            b_copy.squares[i] = b.squares[i];
+        }
+        // See if any possible computer moves results in a win
+        for (int i = 1; i < 10; ++i) {
+            if (b_copy.squares[i] != 'X' && b_copy.squares[i] != 'O') {
+                b_copy.squares[i] = b_copy.player_two_piece;
+                if (b_copy.check_win(b_copy.player_two_piece) == true) {
+                    return i;
+                }
+                else {
+                    b_copy.squares[i] = i;
+                }
+            }
+        }
+        // See if any possible human moves results in a win
+        for (int i = 1; i < 10; ++i) {
+            if (b_copy.squares[i] != 'X' && b_copy.squares[i] != 'O') {
+                b_copy.squares[i] = b_copy.player_one_piece;
+                if (b_copy.check_win(b_copy.player_one_piece) == true) {
+                    return i;
+                }
+                else {
+                    b_copy.squares[i] = i;
+                }
+            }
+        }
+        // Returns first empty square up from one
+        for (int i = 1; i < 10; ++i) {
+            if (b.squares[i] != 'X' && b.squares[i] != 'O') {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    void board_reset() {
+        b.squares[1] = '1';
+        b.squares[2] = '2';
+        b.squares[3] = '3';
+        b.squares[4] = '4';
+        b.squares[5] = '5';
+        b.squares[6] = '6';
+        b.squares[7] = '7';
+        b.squares[8] = '8';
+        b.squares[9] = '9';
     }
 
 private:
